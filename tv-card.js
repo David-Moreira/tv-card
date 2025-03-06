@@ -194,11 +194,11 @@ class TVCardServices extends LitElement {
     onTouchStart(event) {
         event.stopImmediatePropagation();
 
-        this.holdaction = "KEY_ENTER";
+        this.holdaction = "enter";
         this.holdtimer = setTimeout(() => {
             //hold
             this.holdinterval = setInterval(() => {
-                this.sendKey(this.holdaction);
+                this.handleAction(this.holdaction);
                 if (this._config.enable_button_feedback === undefined || this._config.enable_button_feedback) fireEvent(window, "haptic", "light");
             }, 200);
         }, 700);
@@ -230,14 +230,14 @@ class TVCardServices extends LitElement {
 
         if (Math.abs(diffX) > Math.abs(diffY)) {
             // sliding horizontally
-            let key = diffX > 0 ? "KEY_LEFT" : "KEY_RIGHT";
-            this.holdaction = key;
-            this.sendKey(key);
+            let action = diffX > 0 ? "left" : "right";
+            this.holdaction = action;
+            this.handleAction(action);
         } else {
             // sliding vertically
-            let key = diffY > 0 ? "KEY_UP" : "KEY_DOWN";
-            this.holdaction = key;
-            this.sendKey(key);
+            let action = diffY > 0 ? "up" : "down";
+            this.holdaction = action;
+            this.handleAction(action);
         }
 
         if (this._config.enable_button_feedback === undefined || this._config.enable_button_feedback) fireEvent(window, "haptic", "selection");
@@ -247,6 +247,10 @@ class TVCardServices extends LitElement {
 
     handleActionClick(e) {
         let action = e.currentTarget.action;
+        this.handleAction(action);
+    }
+
+    handleAction(action) {
         let info = this.custom_keys[action] || this.custom_sources[action] || keys[action] || sources[action];
 
         if (info.key) {
