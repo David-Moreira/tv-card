@@ -168,15 +168,15 @@ class TVCardServices extends LitElement {
 
     onClick(event) {
         event.stopImmediatePropagation();
-        let click_action = () => {
-            this.handleAction("enter");
-            if (this._config.enable_button_feedback === undefined || this._config.enable_button_feedback) fireEvent(window, "haptic", "light");
-        };
-        if (this._config.enable_double_click) {
-            this.timer = setTimeout(click_action, 200);
-        } else {
-            click_action();
-        }
+        //let click_action = () => {
+        //    this.handleAction("enter");
+        //    if (this._config.enable_button_feedback === undefined || this._config.enable_button_feedback) fireEvent(window, "haptic", "light");
+        //};
+        //if (this._config.enable_double_click) {
+        //    this.timer = setTimeout(click_action, 200);
+        //} else {
+        //    click_action();
+        //}
     }
 
     onDoubleClick(event) {
